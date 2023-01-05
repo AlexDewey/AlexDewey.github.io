@@ -23,11 +23,6 @@
   Used DigitalOcean to setup an SQL server. Made use of Express.js, Node.js for web server communications. Used Android Studio for UI. Users could register, login and leave reviews with a properly encrypted backend.<br>
   Github: https://github.com/AriEncarnacion/SAEGG-Game-Utility<br>
   <br>
-  Machine Learning Research Assistant:<br>
-  Created an algorithm for accurate Mel spectrogram classification taking home first place in the 35th Annual CSU Systemwide Student Research Competition.<br>
-  The algorithm made use of Transfer Learning, CNNs, UMAP, and SVMs utilizing confidence intervals for analysis in the field of ecoinformatics.<br>
-  I made a video accompanying my presentation: https://www.youtube.com/watch?v=Bpxb_7Mmx5U<br>
-  <br>
   Graduated Sonoma State University with a Major GPA of 3.65 with Awards of the Dean’s List and KORET Scholar’s Award.<br>
   Currently attending UC Davis for my masters degree.<br>
   <br>
@@ -37,7 +32,7 @@
   Made use of both a base DQN and C51 agent to play in various environments.<br>
   Environments ranged from easy to hard hardcoded bots as well as other gym environments to train agents on making optimal moves.<br>
   Optimizations were made in the featurespace, as to only allow the agent to make specific “obvious” optimal plays while still giving it the agency to play the game how it wants.<br>
-  The agent trained on a gym environment on average beat the hardcoded AI I had originally made.<br>
+  The agent trained on a gym environment beat the hardcoded AI 86% of the time.<br>
   Github: https://github.com/AlexDewey/ReinforcementLearningCardGame<br>
   <br>
   Recommendation Systems:<br>
@@ -45,8 +40,27 @@
   This was incredibly fun and got me into the path of reading research papers and understanding them to a deep level as I implemented the paper here https://github.com/AlexDewey/JNCF-Recommender<br>
   This experience is my first in exploring the domain space of recommender systems, I want to learn a lot more as I find them enjoyable to work on and incredibly important for many companies.<br>
   <br>
+  ALS Matrix Factorization<br>
   In learning the fundamentals of recommendation systems I used basic mathematical resources to reconstruct ALS MF from scratch. This helped sharped my mathematical understanding of linear algebra and optimization theory and was the first time I focused on code quality and readability. https://github.com/AlexDewey/Matrix-Factorization-ALS<br>
-
+  The following is a description of how ALS MF works as I didn't find any satisfactory explainations online.<br>
+  We have a rating matrix R and want to predict unknown ratings.<br>
+  R:{nxm}, Every entry of user u and item i can be written as r_ui.<br>
+  Each u,i gets a k dimensional vector respectively called x_u, y_i.<br>
+  These k dimensional vectors are called factors.<br>
+  Predicting an unknown r_ui = x_u.T * y_i. R = X.T * Y | X = [x_1, ... x_n], Y = [y_1, ... y_m]<br>
+  Finding optimal X and Y could be done using MSE and regularization:<br>
+  min(X,Y) sum((r_ui-x_u.T*y_i)^2 + lambda(sum(||x_u||^2) + sum(||y_i||^2))<br>
+  But this is nonconvex and NP hard. Gradient descent is suboptimal.<br>
+  ALS fixes x and then solves for y, then fixes y and solves for x.<br>
+  for u=1...n do<br>
+    x = (sum(y_i*y_i.T + lambda*I_k))^-1 * sum(r_ui*y_i)<br>
+  end for<br>
+  The same is for y, just replace all x with y and u with i.<br>
+  Then to predict, r_ui = x_u.T * y_i for all u, i.,<br>
+  In calculations we have to calculate an A and B as shown below:
+  x_u = (A + lambda*I_k)^-1 * B<br>
+  where A is the y_i*y_i.T for every rated item in u.<br>
+  B is the rating*y_i for every rating item in u.<br>
 </span></p>
 </body>
 </html>
